@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<style>
+    .inputFileWrapper label{
+        display: block;
+        float: left;
+        position: relative;
+    }
+    .inputFileWrapper input[type="file"]{
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        clip:rect(0,0,0,0);
+    }
+    .inputFileWrapper .custorm-style{
+        display: block;
+        width: 390px;
+        height: 50px;
+    }
+    .inputFileWrapper .custorm-style .right-button{
+        width: 80px;
+        line-height: 50px;
+        background: #008ac7;
+        color: #fff;
+        display: block;
+        text-align: center;
+        float: right;
+    }
+    .inputFileWrapper .custorm-style .left-text{
+        width: 300px;
+        height: 40px;
+        line-height: 50px;
+        display: block;
+        float: left;
+        padding: 4px;
+        border: 1px solid #008ac7;
+        overflow: hidden;
+        -ms-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>
+
+<div class="inputFileWrapper">
+    <span style="display: inline-block;float: left">shangchuan </span>
+    <label for="inputFile">
+        <input type="file" id="inputFile"/>
+        <span class="custorm-style">
+            <span class="left-text" id="rightText"></span>
+            <span class="right-button">上传头像</span>
+        </span>
+    </label>
+</div>
+<div class="inputFileWrapper">
+    <span style="display: inline-block;float: left">shangchuan </span>
+    <label for="inputFile">
+        <input type="file" id="inputFile2"/>
+        <span class="custorm-style">
+            <span class="left-text" id="rightText2"></span>
+            <span class="right-button">上传头像</span>
+        </span>
+    </label>
+</div>
+ <script src="js/jquery-3.1.1.min.js"></script>
+ <script>
+         var fileBtn = $("#inputFile");
+         var fileBtn2 = $("#inputFile2");
+
+         fileBtn.on("change", function(){
+                 var index = $(this).val().lastIndexOf("\\");
+                var sFileName = $(this).val().substr((index+1));
+                $("#rightText").html(sFileName);
+             });
+         fileBtn2.on("change", function(){
+             var index = $(this).val().lastIndexOf("\\");
+             var sFileName = $(this).val().substr((index+1));
+             $("#rightText2").html(sFileName);
+         });
+     </script>
+</body>
+</html>

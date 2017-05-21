@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>图片预加载</title>
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <style>
+        body,html{
+            height: 100%;
+        }
+        a{
+            text-decoration: none;
+        }
+        a:hover{
+            background: #eee;
+        }
+        .box{
+            text-align: center;
+        }
+        .btn{
+            display:inline-block;
+            height: 30px;
+            line-height:30px;
+            border: 1px solid #ccc;
+            padding: 0 10px;
+            margin-right: 50px;
+        }
+        .loading{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #eee;
+            text-align: center;
+            font-size: 30px;
+        }
+        .progress{
+            margin-top: 300px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1495957511&di=7f897ea2b0c7de7daace0550a6358dab&imgtype=jpg&er=1&src=http%3A%2F%2Fimga.mumayi.com%2Fandroid%2Fimg_google%2F2013%2F09%2F26%2Fcom.hd.live.wallpaper.beauty.anime%2Fcomhdlivewallpaperbeautyanime_litpic_2.jpg" alt="" id="img">
+    <p>
+        <a href="javascript:;" class="btn" data-control="prev">上一页</a>
+        <a href="javascript:;" class="btn" data-control="next">下一页</a>
+    </p>
+</div>
+
+<div class="loading">
+    <p class="progress">
+        0%
+    </p>
+</div>
+<script src="js/preload.js"></script>
+<script>
+    var imgs = [
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1495957511&di=7f897ea2b0c7de7daace0550a6358dab&imgtype=jpg&er=1&src=http%3A%2F%2Fimga.mumayi.com%2Fandroid%2Fimg_google%2F2013%2F09%2F26%2Fcom.hd.live.wallpaper.beauty.anime%2Fcomhdlivewallpaperbeautyanime_litpic_2.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1495957536&di=f3b7ad5112e1807e953805567b8f42ba&imgtype=jpg&er=1&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F11%2F09%2F64%2F39i58PICmgE.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1495958022&di=4709d0173bf1ec76cc584e4e37f294ca&imgtype=jpg&er=1&src=http%3A%2F%2Fb.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fa5c27d1ed21b0ef47a3cc0a7dbc451da80cb3e76.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1495958037&di=903b4a7f9d2711967520170e119661c0&imgtype=jpg&er=1&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Ffaedab64034f78f087172dbc7d310a55b3191c64.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1495958059&di=3818ae601bd253c344b7c543b12e9a7c&imgtype=jpg&er=1&src=http%3A%2F%2Fc.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F1f178a82b9014a909461e9baa1773912b31bee5e.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1495958073&di=50497e01befae8a1693539bf11a6819b&imgtype=jpg&er=1&src=http%3A%2F%2Fd.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F7c1ed21b0ef41bd5e6c559a057da81cb38db3dcb.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1495958083&di=1fc34f4fed90d65cc5396da46fcf8161&imgtype=jpg&er=1&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2Ff1d7bdf9d72a6059e78e5fcf2834349b013bbaa6.jpg'
+    ];
+
+    var index = 0,
+        len = imgs.length,
+        $progress = $('.progress');
+
+    $.preload(imgs,{
+        each:function (count) {
+            $progress.html(Math.random( (count + 1) / len *100 ) + '%');
+        },
+        all:function () {
+            $('.loading').hide();
+            document.title = '1/' +(len);
+        }
+    });
+
+
+    $('.btn').on('click', function () {
+        if ($(this).data('control') === 'prev' ){//上一张
+            index--;
+            if (index < 0) {
+                index = 0;
+            }
+        }else {//下一张
+            index++;
+            if (index > len) {
+                index = len-1;
+            }
+        }
+        document.title = (index + 1)+ '/' +(len);
+        $('#img').attr('src',imgs[index])
+    })
+
+</script>
+</body>
+</html>
