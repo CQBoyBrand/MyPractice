@@ -73,7 +73,7 @@
 
     $.preload(imgs,{
         each:function (count) {
-            $progress.html(Math.random( (count + 1) / len *100 ) + '%');
+            $progress.html(Math.round( (count + 1) / len *100 ) + '%');
         },
         all:function () {
             $('.loading').hide();
